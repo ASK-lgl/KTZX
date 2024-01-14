@@ -154,9 +154,9 @@
                                                 {{ roleArrayByTypeNum[scope.$index].length }}
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="name" label="首页" width="470">
+                                        <el-table-column prop="" label="首页" width="470">
                                             <template slot-scope="scope">
-                                                {{ roleMap[scope.$index].name }}首页
+                                                {{ roleMap[scope.$index].homeName }}
                                             </template>
                                         </el-table-column>
                                         <el-table-column  label="操作" width="">
@@ -319,42 +319,69 @@ export default {
             tabSumIndex: 1,     // 记录有多少个标签页，编号从1开始
 
             // 接收后端传来的数据
-            RoleManagementTableData: [
+            AdminPagesData: [
                 {
                     name: '教务处主任',
-                    typeNum: 1,
+                    typeNum: 3,
                     users: [1, 2],
-                    notes: '',
+                    notes: '教务处',
+                    isAdmin: false,
+                    homeUrl: '',
+                    homeName: '教务处首页',
                 },
                 {
                     name: '信息学院负责人',
-                    typeNum: 2,
+                    typeNum: 4,
                     users: [],
                     notes: '',
+                    isAdmin: false,
+                    homeUrl: '',
+                    homeName: '学院负责人首页',
                 },
                 { 
                     name: '计算机专业负责人',
-                    typeNum: 3, 
+                    typeNum: 6, 
                     users: [3, 4, 5],
                     notes: '',
+                    isAdmin: false,
+                    homeUrl: '',
+                    homeName: '',
                 },
                 {
                     name: '电控学院负责人',
-                    typeNum: 2,
+                    typeNum: 4,
                     users: [],
                     notes: '',
+                    isAdmin: false,
+                    homeUrl: '',
+                    homeName: '',
                 },
                 {
                     name: '自动化专业负责人',
-                    typeNum: 3,
+                    typeNum: 6,
                     users: [6],
                     notes: '',
+                    isAdmin: false,
+                    homeUrl: '',
+                    homeName: '专业负责人首页',
                 },
                 {
                     name: '经管学院负责人',
-                    typeNum: 2,
+                    typeNum: 4,
                     users: [],
                     notes: '',
+                    isAdmin: false,
+                    homeUrl: '',
+                    homeName: '',
+                },
+                {
+                    name: '计算机专业本科生',
+                    typeNum: 10,
+                    users: [8],
+                    notes: '',
+                    isAdmin: false,
+                    homeUrl: '',
+                    homeName: '学生首页',
                 },
             ],
             roleArrayByTypeNum: [],    //存储同一角色类型的不同角色名称
@@ -363,18 +390,63 @@ export default {
             roleMap: [
                 {
                     typeNum: 1,
-                    name: '教务处',
-                    notes: '教务处',
+                    name: '超级管理员',
+                    notes: '',
+                    homeName: '',
                 },
                 {
                     typeNum: 2,
-                    name: '学院负责人',
-                    notes: '学院负责人',
+                    name: '教学秘书',
+                    notes: '',
+                    homeName: '',
                 },
                 {
                     typeNum: 3,
+                    name: '教务处',
+                    notes: '',
+                    homeName: '',
+                },
+                {
+                    typeNum: 4,
+                    name: '学院负责人',
+                    notes: '',
+                    homeName: '',
+                },
+                {
+                    typeNum: 5,
+                    name: '系主任',
+                    notes: '',
+                    homeName: '',
+                },
+                {
+                    typeNum: 6,
                     name: '专业负责人',
-                    notes: '专业负责人',
+                    notes: '',
+                    homeName: '',
+                },
+                {
+                    typeNum: 7,
+                    name: '课程负责人',
+                    notes: '',
+                    homeName: '',
+                },
+                {
+                    typeNum: 8,
+                    name: '任课教师',
+                    notes: '',
+                    homeName: '',
+                },
+                {
+                    typeNum: 9,
+                    name: '助教',
+                    notes: '',
+                    homeName: '',
+                },
+                {
+                    typeNum: 10,
+                    name: '学生',
+                    notes: '',
+                    homeName: '',
                 },
             ],
 
@@ -747,9 +819,12 @@ export default {
 
         // 将后端传来的数据按角色类型分类存放
         classifyRolesBytypeNum() {
-            for(let role of this.RoleManagementTableData){
-                if(!this.roleArrayByTypeNum[role.typeNum - 1]) this.roleArrayByTypeNum[role.typeNum - 1] = [];
+            for(let type of this.roleMap){
+                this.roleArrayByTypeNum[type.typeNum - 1] = [];
+            }
+            for(let role of this.AdminPagesData){
                 this.roleArrayByTypeNum[role.typeNum - 1].push(role);
+                if(this.roleMap[role.typeNum - 1].homeName === '') this.roleMap[role.typeNum - 1].homeName = role.homeName;
             }
         },
 
