@@ -145,7 +145,7 @@
                                         增加类型
                                     </el-button>
 
-                                    <el-table :data="roleMap" style="width: 100%;"
+                                    <el-table :data="roleMap" style="width: 100vw;"
                                         :row-class-name="tableRowClassName" size="mini" border>
                                         <el-table-column prop="name" label="类型" width="260">
                                         </el-table-column>
@@ -154,12 +154,12 @@
                                                 {{ roleArrayByTypeNum[scope.$index].length }}
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="" label="首页" width="470">
+                                        <el-table-column prop="" label="首页" width="400">
                                             <template slot-scope="scope">
                                                 {{ roleMap[scope.$index].homeName }}
                                             </template>
                                         </el-table-column>
-                                        <el-table-column  label="操作" width="">
+                                        <el-table-column label="操作" width="">
                                             <template slot-scope="row">
                                                 <div class="table_operate_column">
                                                     <el-button type="primary" size="small" @click="changeType(row.$index)"
@@ -958,7 +958,7 @@ export default {
 
 .table_operate_column{
     display: flex; 
-    justify-content: center;
+    justify-content: left;
 }
 
 /* 分页组件位置 */
