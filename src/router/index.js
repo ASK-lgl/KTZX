@@ -24,7 +24,7 @@ const routes = [
     component: () => import('../views/RegisterView.vue')
   },
   {
-    path: '/admin',
+    path: '/homes/adminhome',
     name: 'admin',
     component: () => import('../views/AdminView.vue')
   },

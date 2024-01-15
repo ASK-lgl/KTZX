@@ -257,11 +257,11 @@
                         </div>
 
                         <div v-if="activeTabsValue === '3'">
-                            <el-table :data="roleMap" style="width: 100%"
+                            <el-table :data="roleMap" style="width: 100vw"
                                 :row-class-name="tableRowClassName" size="mini" border>
                                 <el-table-column prop="name" label="类型" width="330">
                                 </el-table-column>
-                                <el-table-column prop="notes" label="备注" width="600">
+                                <el-table-column prop="notes" label="备注" width="470">
                                 </el-table-column>
                                 <el-table-column>
                                     <div class="table_operate_column">
