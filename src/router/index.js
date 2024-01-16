@@ -24,8 +24,8 @@ const routes = [
     component: () => import('../views/RegisterView.vue')
   },
   {
-    path: '/homes/adminhome',
-    name: 'admin',
+    path: '/homes/superadminhome',
+    name: 'superadminhome',
     component: () => import('../views/AdminView.vue')
   },
   {

@@ -1,25 +1,17 @@
 <template>
     <div>
-    <el-popover
-        placement="right-start"
-        ref="popoverRef1"
-        trigger="click"
-        >
-        <el-button @click="() => this.$refs.popoverRef1.doClose()">关闭</el-button>
-        <span slot="reference">
-            <i class="el-icon-caret-right"></i>aaa
-        </span>
-    </el-popover>
-    <el-popover
-        placement="right-start"
-        ref="popoverRef2"
-        trigger="click"
-        >
-        <el-button @click="() => this.$refs.popoverRef2.doClose()">关闭</el-button>
-        <span slot="reference">
-            <i class="el-icon-caret-right"></i>aaa
-        </span>
-    </el-popover>
+        <el-form label-width="70px" class="loginForm">
+            <el-form-item prop="username" class="input_box">
+                <el-input placeholder="请输入用户名" type="text" autocomplete="off"
+                    class="input">
+                </el-input>
+            </el-form-item>
+            <el-form-item prop="pwd" class="input_box">
+                <el-input placeholder="请输入密码" type="password" autocomplete="off"
+                    show-password class="input">
+                </el-input>
+            </el-form-item>
+        </el-form>
 </div>
 </template>
 
