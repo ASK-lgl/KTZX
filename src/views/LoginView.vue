@@ -83,7 +83,7 @@ export default {
 				phone: '',
 				code: '',
 				catelog: null,
-				loginway: 2
+				loginway: 1
 			},
 
 			// 输入框验证规则
@@ -223,7 +223,7 @@ export default {
 			for(let button of buttons){
 				button.style.borderBottom = 'none';
 			}
-			document.getElementById(id).style.borderBottom = '3px solid dodgerblue'; 	
+			document.getElementById(id).style.borderBottom = '3px solid dodgerblue';
 		},
 		changeLoginway(value){
 			this.loginForm.loginway = this.loginFormByPhone.loginway = this.loginFormType = value;
@@ -261,7 +261,7 @@ export default {
 				else{
 					let id = btn.target.id;
 					document.getElementById(id).disabled = true; //禁用按钮的点击事件
-					document.getElementById(id).style.backgroundColor = 'gray';
+					document.getElementById(id).style.backgroundColor = 'silver';
 					document.getElementById(id).style.cursor = 'not-allowed';
 					document.getElementById(id).innerHTML = '重新发送(' + this.count + 's)';
 					this.codeTimer = setInterval(() => {
@@ -400,7 +400,7 @@ button.submit:active {
 }
 
 .get-code{
-	height: 42px;
+	height: 41px;
 	width: 90px;
 	border: 1px solid gainsboro;
 	background-color: dodgerblue;
