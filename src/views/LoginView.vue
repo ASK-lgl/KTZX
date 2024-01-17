@@ -11,12 +11,12 @@
 			</div>
 			<div v-show="loginFormType == 1">
 				<el-form :model="loginForm" :rules="pwdRules" ref="loginForm" class="loginForm">
-					<el-form-item prop="username" class="input_box">
+					<el-form-item prop="username" class="input_box" label-width="40px">
 						<el-input placeholder="请输入用户名" type="text" v-model="loginForm.username" autocomplete="off"
 							class="input">
 						</el-input>
 					</el-form-item>
-					<el-form-item prop="pwd" class="input_box">
+					<el-form-item prop="pwd" class="input_box" label-width="40px">
 						<el-input placeholder="请输入密码" type="password" v-model="loginForm.pwd" autocomplete="off"
 							show-password class="input">
 						</el-input>
@@ -33,12 +33,13 @@
 
 			<div v-show="loginFormType == 2">
 				<el-form :model="loginFormByPhone" :rules="phoneRules" ref="loginFormByPhone" class="loginForm">
-					<el-form-item prop="phone" class="input_box">
+					<el-form-item prop="phone" class="input_box" label-width="40px">
 						<el-input placeholder="请输入手机号" type="text" v-model="loginFormByPhone.phone" autocomplete="off"
-							class="input">
+							class="input" style="width: 180px;">
 						</el-input>
+						<button class="get-code" id="get-code" @click="getCode">获取验证码</button>
 					</el-form-item>
-					<el-form-item prop="code" class="input_box">
+					<el-form-item prop="code" class="input_box" label-width="40px">
 						<el-input placeholder="请输入验证码" type="text" v-model="loginFormByPhone.code" autocomplete="off"
 							class="input">
 						</el-input>
@@ -84,6 +85,8 @@ export default {
 				catelog: null,
 				loginway: 2
 			},
+
+			// 输入框验证规则
 			pwdRules: {
 				username: [{ required: true, message: "请输入用户名", trigger: "submit" },],
 				pwd: [{ required: true, message: "请输入密码", trigger: "submit" },],
@@ -97,14 +100,15 @@ export default {
 					{ required: true, message: "请输入验证码", trigger: "submit" },
 				],
 			},
-			user: {		// 接收后端数据
+
+			user: {		// 用户当前选择的角色数据
 				userid: '',
 				catelog: '',
 				rolename: '',
 				roleid: '',
 				homeurl: ''
 			},
-			rolesList: {
+			rolesList: {	//存放响应数据
 				userid: '',
 				catelog: '',
 				simpleRoleList: [
@@ -138,8 +142,11 @@ export default {
 			loginway: '1',
 			loginFormType: 1,
 
-			chooseRoleFormVisible: false,
+			chooseRoleFormVisible: false,	//选择角色菜单
 			roleNum: '',
+
+			count: 60,		//发送验证码功能数据
+			codeTimer: null,
 		};
 	},
 	methods: {
@@ -209,14 +216,14 @@ export default {
 				}
 			});
 		},
-		changeCatelog(event){
-			let id = event.target.id;
+		changeCatelog(btn){
+			let id = btn.target.id;
 			this.loginForm.catelog = this.loginFormByPhone.catelog = id;
 			let buttons = document.getElementsByClassName('catelog');
 			for(let button of buttons){
 				button.style.borderBottom = 'none';
 			}
-			document.getElementById(id).style.borderBottom = '3px solid blue'; 	
+			document.getElementById(id).style.borderBottom = '3px solid dodgerblue'; 	
 		},
 		changeLoginway(value){
 			this.loginForm.loginway = this.loginFormByPhone.loginway = this.loginFormType = value;
@@ -242,6 +249,36 @@ export default {
 				duration: 0,
 				showClose: false,
 				dangerouslyUseHTMLString: true,
+			});
+		},
+
+		getCode(btn){
+			this.$refs['loginFormByPhone'].validateField('phone', (valid) => {
+				valid = !valid;		//这里因为检验错误时会返回一个字符串，而成功时返回空串，这里把返回字符串的情况作为false处理
+				if(!valid){
+					return false;
+				}
+				else{
+					let id = btn.target.id;
+					document.getElementById(id).disabled = true; //禁用按钮的点击事件
+					document.getElementById(id).style.backgroundColor = 'gray';
+					document.getElementById(id).style.cursor = 'not-allowed';
+					document.getElementById(id).innerHTML = '重新发送(' + this.count + 's)';
+					this.codeTimer = setInterval(() => {
+						if(this.count > 0){
+							this.count --;
+							document.getElementById(id).innerHTML = '重新发送(' + this.count + 's)';
+						}
+						else{
+							clearInterval(this.codeTimer);
+							this.count = 60;
+							document.getElementById(id).disabled = false;	// 启用按钮的点击事件
+							document.getElementById(id).innerHTML = '获取验证码';
+							document.getElementById(id).style.cursor = 'pointer';
+							document.getElementById(id).style.backgroundColor = 'dodgerblue';
+						}
+					}, 1000);
+				}
 			});
 		},
 	},
@@ -285,9 +322,14 @@ export default {
 	color: white;
 	border: none;
 	margin: 0 auto 0 auto;
-	width: 140px;
+	width: 150px;
 	height: 35px;
 	border-radius: 5px;
+	cursor: pointer;
+}
+
+button.submit:hover {
+	background: rgb(74, 164, 254);
 }
 
 /* 按钮点击变化 */
@@ -297,7 +339,6 @@ button.submit:active {
 
 /* 每一个输入框的位置调整 */
 .input_box {
-	text-align: center;
 	margin-bottom: 40px;
 }
 
@@ -345,18 +386,33 @@ button.submit:active {
 	cursor: pointer;
 }
 
+.catelog:hover{
+	color: dodgerblue;
+}
+
 .catelog.left{
 	width: 30%;
 	border-bottom: 3px solid blue;
 }
-/* .catelog.left:active{
-	border-bottom: 3px solid blue;
-} */
 
 .catelog.right{
 	width: 30%;
 }
-/* .catelog.right:focus{
-	border-bottom: 3px solid blue;
-} */
+
+.get-code{
+	height: 42px;
+	width: 90px;
+	border: 1px solid gainsboro;
+	background-color: dodgerblue;
+	border-radius: 5%;
+	color: white;
+	font-size: 12px;
+	cursor: pointer;
+}
+.get-code:hover{
+	background-color: rgb(74, 164, 254);
+}
+.get-code:active{
+	background-color: rgb(24, 114, 204);
+}
 </style>
