@@ -32,7 +32,7 @@
 			</div>
 
 			<div v-show="loginFormType == 2">
-				<el-form :model="loginFormByPhone" :rules="phoneRules" ref="loginFormByPhone" class="loginForm">
+				<el-form :model="loginFormByPhone" :rules="phoneRules" ref="loginFormByPhone" class="loginForm" @submit.native.prevent>
 					<el-form-item prop="phone" class="input_box" label-width="40px">
 						<el-input placeholder="请输入手机号" type="text" v-model="loginFormByPhone.phone" autocomplete="off"
 							class="input" style="width: 180px;">
