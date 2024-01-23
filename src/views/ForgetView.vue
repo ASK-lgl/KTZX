@@ -48,22 +48,6 @@
 <script>
 export default {
     data() {
-        var validateAccount = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('请输入账号'));
-            }
-            else {
-                callback();
-            }
-        };
-        var validatePassword = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('请输入密码'));
-            }
-            else {
-                callback();
-            }
-        };
         var validateCheckPassword = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请再次输入密码'));
@@ -84,13 +68,13 @@ export default {
             },
             rules: {
                 account: [
-                    { validator: validateAccount, trigger: 'blur' }
+                    { required: true, message:'请输入账号', trigger: 'submit' }
                 ],
                 password: [
-                    { validator: validatePassword, trigger: 'blur' }
+                    { required: true, message: '请输入新密码', trigger: 'submit' }
                 ],
                 CheckPassword: [
-                    { validator: validateCheckPassword, trigger: 'blur' }
+                    { validator: validateCheckPassword, trigger: 'submit' }
                 ]
             },
         }
@@ -159,6 +143,7 @@ export default {
     width: 140px;
     height: 35px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 /* 下一步按钮 */
