@@ -81,7 +81,7 @@
                             <span class="custom-tree-node" slot-scope="{ node }">
                                 <span>
                                     <i v-if="node.data.children.length > 0" class="el-icon-folder-opened"></i>
-                                    <i v-else-if="node.data.children.length == 0" class="el-icon-collection-tag">   </i>
+                                    <i v-else-if="node.data.children.length == 0" class="el-icon-collection-tag"></i>
                                     {{ node.data.label }}
                                 </span>
                                 <el-checkbox v-if="node.checked !== undefined" v-model="node.checked"

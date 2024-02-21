@@ -392,7 +392,7 @@ button.submit:active {
 
 .catelog.left{
 	width: 30%;
-	border-bottom: 3px solid blue;
+	border-bottom: 3px solid dodgerblue;
 }
 
 .catelog.right{
